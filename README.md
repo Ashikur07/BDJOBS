@@ -10,7 +10,7 @@ Live link : https://assignment-11-by-ashik.netlify.app
 • Responsive Design and Cross-Platform Compatibility . 
 
 # Selected category
-• assignment_category_0003
+• assignment_category_0003 
 
 
 # React + Vite
