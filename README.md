@@ -11,7 +11,7 @@ Live link : https://assignment-11-by-ashik.netlify.app
 
 # Selected category   
 • assignment_category    
-# React + Vite     
+# React + Vite      
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
