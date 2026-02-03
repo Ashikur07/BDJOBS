@@ -9,7 +9,7 @@ Live link : https://assignment-11-by-ashik.netlify.app
 • Job alerts for specific criteria  </br>
 • Responsive Design and Cross-Platform Compatibility . 
 
-# Selected category  
+# Selected category   
 • assignment_category    
 # React + Vite     
 
