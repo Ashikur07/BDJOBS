@@ -1,181 +1,183 @@
-
 import { useContext, useEffect } from "react";
 import { IoMdCube } from "react-icons/io";
+import { FaPlusCircle, FaRegFileAlt, FaMoneyBillWave, FaCalendarAlt } from "react-icons/fa";
 import Swal from "sweetalert2";
 import { AuthContext } from "../../Provider/AuthProvider";
 import { useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
 
 const AddAJob = () => {
-
     useEffect(() => {
-        document.title = 'Add Job';
+        document.title = 'Add A Job | JobHunter';
+        window.scrollTo(0, 0);
     }, []);
 
     const { user } = useContext(AuthContext);
-    const user_name = user?.displayName;
-    const user_email = user?.email;
     const navigate = useNavigate();
 
-
-    const handleAddItem = e => {
+    const handleAddItem = async (e) => {
         e.preventDefault();
-        const job_title = e.target.job_title.value;
-        const job_type = e.target.job_category.value;
-        const banner = e.target.image.value;
-        const salary_range = e.target.salary_range.value;
-        const job_posting_date = e.target.job_post_date.value;
-        const application_deadline = e.target.application_deadline.value;
-        const job_applicants_number = parseInt(e.target.applicants_number.value);
-        const description = e.target.job_description.value;
-        const name = user_name;
-        const email = user_email;
+        const form = e.target;
+        
+        const newJob = {
+            job_title: form.job_title.value,
+            job_type: form.job_category.value,
+            banner: form.image.value,
+            salary_range: form.salary_range.value,
+            job_posting_date: form.job_post_date.value,
+            application_deadline: form.application_deadline.value,
+            job_applicants_number: parseInt(form.applicants_number.value),
+            description: form.job_description.value,
+            name: user?.displayName,
+            email: user?.email
+        };
 
-        const newItems = {
-            job_title,
-            job_type,
-            banner,
-            salary_range,
-            job_posting_date,
-            application_deadline,
-            job_applicants_number,
-            description,
-            name,
-            email
+        try {
+            const res = await fetch(`${import.meta.env.VITE_API_URL}/postedjobs`, {
+                method: 'POST',
+                headers: { 'content-type': 'application/json' },
+                body: JSON.stringify(newJob)
+            });
+            const data = await res.json();
+
+            if (data.insertedId) {
+                Swal.fire({
+                    title: 'Success!',
+                    text: 'Job posted successfully!',
+                    icon: 'success',
+                    confirmButtonColor: '#6366f1',
+                });
+                form.reset();
+                navigate('/myJobs');
+            }
+        } catch (error) {
+            Swal.fire({ icon: 'error', title: 'Oops...', text: 'Something went wrong!' });
         }
-
-        // send data to the server
-        fetch(`${import.meta.env.VITE_API_URL}/postedjobs`, {
-            method: 'POST',
-            headers: {
-                'content-type': 'application/json'
-            },
-            body: JSON.stringify(newItems)
-        })
-            .then(res => res.json())
-            .then(data => {
-                if (data.insertedId) {
-                    Swal.fire({
-                        title: 'Success!',
-                        text: 'Item Added Successfully',
-                        icon: 'success',
-                        confirmButtonText: 'Cool'
-                    })
-                    e.target.reset();
-                    navigate('/myJobs')
-                }
-            })
-    }
-
-
-    const backgroundImageUrl = "https://i.ibb.co/93YRDhR/photo-1499914485622-a88fac536970-q-80-w-2070-auto-format-fit-crop-ixlib-rb-4-0.jpg";
-
-    const backgroud = {
-        backgroundImage: `url(${backgroundImageUrl})`,
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-        backgroundRepeat: "no-repeat",
-        filter: "brightness(90%)",
     };
 
-
     return (
-        <div className="pb-32" style={backgroud}>
-
-            <h1 className="text-blue-600 py-8 text-4xl lg:text-6xl text-center font-bold">Post A New Job</h1>
-
-            <form onSubmit={handleAddItem} className="text-white mx-5 lg:mx-auto lg:w-[800px] border rounded-lg shadow-2xl p-6 bg-gradient-to-r from-[#221137]">
-
-                <h1 className="flex items-center gap-3 text-3xl pb-2 font-bold border-b border-[#958d8d]">
-                    <IoMdCube /> <span>Job Details</span></h1>
-
-                {/* Row 1 */}
-                <div className="flex flex-col lg:flex-row gap-5 mt-4">
-                    <div className="w-full">
-                        <p className="text-lg font-semibold pb-1">Job Title</p>
-                        <input required name="job_title" type="text" placeholder="Enter Job Title" className="bg-white text-black p-1 w-full border input-info rounded-lg" />
-                    </div>
-                    <div className="w-full">
-                        <p className="text-lg font-semibold pb-1">Job Category</p>
-                        <select required name="job_category" className="text-black bg-white p-1 w-full border input-info rounded-lg">
-                            <option disabled selected>Select Job Category</option>
-                            <option>On Site</option>
-                            <option>Remote</option>
-                            <option>Part-Time</option>
-                            <option>Hybrid</option>
-                        </select>
-                    </div>
+        <div className="min-h-screen pt-28 pb-20 transition-all duration-300 bg-base-100">
+            <div className="max-w-4xl mx-auto px-4 md:px-8">
+                
+                {/* Header Section */}
+                <div className="text-center space-y-3 mb-12">
+                    <motion.h1 
+                        initial={{ opacity: 0, y: -20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        className="text-3xl lg:text-6xl font-black text-base-content"
+                    >
+                        Post A New <span className="text-primary">Job</span>
+                    </motion.h1>
+                    <p className="text-base-content/60 font-medium">Fill in the details below to find your next great hire.</p>
                 </div>
 
-                {/* Row 2 */}
-                <div className="flex flex-col lg:flex-row gap-5 mt-4 ">
-                    <div className="w-full">
-                        <p className="text-lg font-semibold pb-1">Job Banner</p>
-                        <input required name="image" type="text" placeholder="Enter job photourl" className="p-1 w-full border input-info rounded-lg" />
-                    </div>
-                    <div className="w-full">
-                        <p className="text-lg font-semibold pb-1">Salary range</p>
-                        <select required name="salary_range" className="text-black bg-white p-1 w-full border input-info rounded-lg">
-                            <option disabled selected>Select Salary range</option>
-                            <option>$100 - $150</option>
-                            <option>$200 - $300</option>
-                            <option>$300 - $400</option>
-                            <option>$400 - $500</option>
-                            <option>$500 - $800</option>
-                            <option>$800 - $1000</option>
-                            <option>above $1000</option>
+                {/* Main Form Container */}
+                <motion.div 
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="bg-base-100 border border-base-200 shadow-2xl rounded-[2rem] p-6 md:p-12"
+                >
+                    <form onSubmit={handleAddItem} className="space-y-8">
+                        
+                        {/* Section 1: Basic Info */}
+                        <div className="space-y-6">
+                            <h2 className="flex items-center gap-3 text-xl font-black border-b border-base-200 pb-4">
+                                <IoMdCube className="text-primary text-2xl" /> 
+                                <span>Core Job Information</span>
+                            </h2>
+                            
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div className="form-control">
+                                    <label className="label"><span className="label-text font-bold">Job Title</span></label>
+                                    <input required name="job_title" type="text" placeholder="e.g. Senior Frontend Developer" className="input input-bordered rounded-xl focus:input-primary bg-base-200/50" />
+                                </div>
+                                <div className="form-control">
+                                    <label className="label"><span className="label-text font-bold">Job Category</span></label>
+                                    <select required name="job_category" className="select select-bordered rounded-xl focus:select-primary bg-base-200/50 font-medium">
+                                        <option disabled selected>Select Category</option>
+                                        <option value="On-Site Jobs">On-Site</option>
+                                        <option value="Remote Jobs">Remote</option>
+                                        <option value="Hybrid">Hybrid</option>
+                                        <option value="Part-Time">Part-Time</option>
+                                    </select>
+                                </div>
+                            </div>
 
-                        </select>
-                    </div>
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div className="form-control">
+                                    <label className="label"><span className="label-text font-bold">Banner Image URL</span></label>
+                                    <input required name="image" type="url" placeholder="Paste image link" className="input input-bordered rounded-xl focus:input-primary bg-base-200/50" />
+                                </div>
+                                <div className="form-control">
+                                    <label className="label"><span className="label-text font-bold text-success flex items-center gap-2"><FaMoneyBillWave /> Salary Range</span></label>
+                                    <select required name="salary_range" className="select select-bordered rounded-xl focus:select-primary bg-base-200/50 font-bold">
+                                        <option disabled selected>Select Range</option>
+                                        <option>$100 - $300</option>
+                                        <option>$300 - $600</option>
+                                        <option>$600 - $1000</option>
+                                        <option>$1000 - $2000</option>
+                                        <option>above $2000</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
 
-                </div>
+                        {/* Section 2: User Info (Read Only) */}
+                        <div className="p-6 bg-base-200/30 rounded-2xl grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div className="form-control">
+                                <label className="label"><span className="label-text font-bold opacity-50">Posted By</span></label>
+                                <input disabled type="text" defaultValue={user?.displayName} className="input input-bordered rounded-xl font-bold bg-base-100" />
+                            </div>
+                            <div className="form-control">
+                                <label className="label"><span className="label-text font-bold opacity-50">Contact Email</span></label>
+                                <input disabled type="text" defaultValue={user?.email} className="input input-bordered rounded-xl font-bold bg-base-100" />
+                            </div>
+                        </div>
 
-                {/* Row 3 */}
-                <div className="flex flex-col lg:flex-row gap-5 mt-4 border-b border-[#958d8d] pb-8">
-                    <div className="w-full">
-                        <p className="text-lg font-semibold pb-1">User Name</p>
-                        <input required disabled type="text" defaultValue={user_name} className="bg-white font-blod text-black p-1 w-full border input-info rounded-lg" />
-                    </div>
-                    <div className="w-full">
-                        <p className="text-lg font-semibold pb-1">User Email</p>
-                        <input required disabled type="text" defaultValue={user_email} className="bg-white font-blod text-black p-1 w-full border input-info rounded-lg" />
-                    </div>
+                        {/* Section 3: Dates & Others */}
+                        <div className="space-y-6">
+                            <h2 className="flex items-center gap-3 text-xl font-black border-b border-base-200 pb-4 pt-4">
+                                <FaCalendarAlt className="text-secondary text-xl" /> 
+                                <span>Timeline & Capacity</span>
+                            </h2>
+                            
+                            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                                <div className="form-control">
+                                    <label className="label"><span className="label-text font-bold">Posting Date</span></label>
+                                    <input required name="job_post_date" type="date" className="input input-bordered rounded-xl focus:input-primary bg-base-200/50" />
+                                </div>
+                                <div className="form-control">
+                                    <label className="label"><span className="label-text font-bold text-error">Deadline</span></label>
+                                    <input required name="application_deadline" type="date" className="input input-bordered rounded-xl focus:input-primary bg-base-200/50" />
+                                </div>
+                                <div className="form-control">
+                                    <label className="label"><span className="label-text font-bold">Initial Applicants</span></label>
+                                    <input required name="applicants_number" type="number" defaultValue={0} className="input input-bordered rounded-xl focus:input-primary bg-base-200/50 font-bold" />
+                                </div>
+                            </div>
+                        </div>
 
-                </div>
+                        {/* Section 4: Description */}
+                        <div className="form-control">
+                            <label className="label"><span className="label-text font-bold flex items-center gap-2"><FaRegFileAlt /> Detailed Description</span></label>
+                            <textarea 
+                                required 
+                                name="job_description" 
+                                className="textarea textarea-bordered rounded-2xl focus:textarea-primary bg-base-200/50 text-base leading-relaxed h-40" 
+                                placeholder="Describe the roles, responsibilities, and requirements..."
+                            ></textarea>
+                        </div>
 
-                {/* Row 4 */}
-                <div className="flex flex-col lg:flex-row gap-5 pt-5">
-                    <div className="w-full">
-                        <p className="text-lg font-semibold pb-1">Job Posting Date</p>
-                        <input required name="job_post_date" type="date" placeholder="Enter Job Title" className="bg-white text-black p-1 w-full border input-info rounded-lg" />
-                    </div>
-                    <div className="w-full">
-                        <p className="text-lg font-semibold pb-1">Application Deadline</p>
-                        <input required name="application_deadline" type="date" placeholder="Enter Job Title" className="bg-white text-black p-1 w-full border input-info rounded-lg" />
-                    </div>
-                </div>
+                        {/* Submit Button */}
+                        <div className="pt-6">
+                            <button type="submit" className="btn btn-primary btn-block rounded-2xl h-14 font-black text-lg shadow-xl shadow-primary/25 gap-2">
+                                <FaPlusCircle /> Post This Job
+                            </button>
+                        </div>
 
-                {/* Row 5 */}
-                <div className="flex flex-col lg:flex-row gap-5 pt-5 border-b border-[#958d8d] pb-8">
-                    <div className="w-full">
-                        <p className="text-lg font-semibold pb-1">Job Applicants Number</p>
-                        <input required name="applicants_number" type="text" defaultValue={0} className="bg-white text-black pl-3 p-1 w-full border input-info rounded-lg" />
-                    </div>
-
-                </div>
-
-                {/* Row 6 */}
-                <div className="mt-5">
-                    <p className="text-lg font-semibold pb-2">Job Description,</p>
-                    <textarea required  name="job_description" className="bg-white text-black w-full border input-info rounded-lg" placeholder="Write here" rows="5"></textarea>
-                </div>
-
-
-                <div className="text-center mt-8 mb-4">
-                    <input className="btn btn-success px-6 text-white" type="submit" name="" id="" value='Post' />
-                </div>
-
-            </form>
-
+                    </form>
+                </motion.div>
+            </div>
         </div>
     );
 };
