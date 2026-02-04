@@ -1,140 +1,68 @@
 import { FcGoogle } from "react-icons/fc";
-import { FaGithub } from "react-icons/fa6";
+import { FaGithub, FaEnvelope, FaLock, FaRegEyeSlash } from "react-icons/fa6";
+import { AiOutlineEye } from "react-icons/ai";
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { GithubAuthProvider, GoogleAuthProvider } from "firebase/auth";
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../Provider/AuthProvider";
-import { AiOutlineEye } from "react-icons/ai";
-import { FaRegEyeSlash } from "react-icons/fa";
 import Swal from "sweetalert2";
-
-
+import { motion } from "framer-motion";
 
 const Login = () => {
-
-    useEffect(() => {
-        document.title = 'Login';
-    }, []);
-
+    useEffect(() => { document.title = 'Login'; }, []);
     const navigate = useNavigate();
-    const [showPassword, setShowPassword] = useState(false);
     const location = useLocation();
+    const [showPassword, setShowPassword] = useState(false);
     const { createUserWithGoogle, createUserWithGitHub, signInUser } = useContext(AuthContext);
 
-    const googleProvider = new GoogleAuthProvider();
-    const gitHubProvider = new GithubAuthProvider();
+    const handleSocialLogin = (providerFunc, provider) => {
+        providerFunc(provider).then(() => {
+            Swal.fire({ title: "Welcome!", icon: "success", timer: 1500, showConfirmButton: false });
+            navigate(location?.state || '/');
+        });
+    };
 
-
-    const handleGoogleSignIn = () => {
-        createUserWithGoogle(googleProvider)
-            .then(() => {
-                Swal.fire({
-                    title: "Login Successfull..!",
-                    icon: "success",
-                    timer: 2000,
-                });
-                navigate(location?.state ? location.state : '/');
-
-            })
-            .catch()
-    }
-
-    const handleGitHubSignIn = () => {
-        createUserWithGitHub(gitHubProvider)
-            .then(() => {
-
-                Swal.fire({
-                    title: "Login Successfull..!",
-                    icon: "success",
-                    timer: 2000,
-                });
-                navigate(location?.state ? location.state : '/');
-            })
-            .catch()
-    }
-
-
-    const handleSignInWithEmail = e => {
+    const handleEmailLogin = e => {
         e.preventDefault();
-        const email = e.target.email.value;
-        const password = e.target.password.value;
-
-        signInUser(email, password)
+        signInUser(e.target.email.value, e.target.password.value)
             .then(() => {
-                Swal.fire({
-                    title: "Login Successfull..!",
-                    icon: "success",
-                    timer: 2000,
-                });
-                navigate(location?.state ? location.state : '/');
-
-            })
-            .catch(() => {
-                // alert('Email or password does not match...! Plese try again')
-                Swal.fire({
-                    title: "Login Successfull..!",
-                    icon: "success",
-                    timer: 1500,
-                });
-            })
-    }
+                Swal.fire({ title: "Success!", icon: "success", timer: 1500, showConfirmButton: false });
+                navigate(location?.state || '/');
+            }).catch(() => Swal.fire({ title: "Error!", text: "Wrong Credentials", icon: "error" }));
+    };
 
     return (
-        <div className='bg-[#c2d0d9] px-5 lg:px-0 w-full  py-20'>
-
-            <div className="animate__animated animate__zoomIn mx-auto lg:w-[390px] bg-white rounded-3xl px-8 pb-10">
-
-                <h1 className='text-center text-2xl font-bold py-7'>Please login</h1>
-
-                <button onClick={handleGoogleSignIn} className='border border-[#a39898] w-full p-2 gap-16 flex rounded-md'>
-                    <FcGoogle className='text-xl' />
-                    <p className='font-semibold'>
-                        Sign in with Google
-                    </p>
-                </button>
-
-                <button onClick={handleGitHubSignIn} className='w-full mt-2 rounded-md border p-2 gap-16 flex bg-[#2EA043] text-white'>
-                    <FaGithub className='text-xl text-black' />
-                    <p className='font-semibold'>
-                        Sign in with GitHub
-                    </p>
-                </button>
-
-                <div className='flex my-6 justify-between items-center'>
-                    <p className='flex-grow border-b border-[#a39898]'></p>
-                    <p className='px-4'>or</p>
-                    <p className='flex-grow border-b border-[#a39898]'></p>
+        <div className='min-h-screen flex items-center justify-center bg-base-200 px-4 py-10 transition-colors'>
+            <motion.div initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }}
+                className="w-full max-w-[360px] bg-base-100 border border-base-300 rounded-[2rem] p-6 sm:p-8 shadow-2xl"
+            >
+                <div className="text-center mb-6">
+                    <h2 className="text-2xl font-black text-base-content tracking-tighter uppercase">Login <span className="text-primary italic">Now</span></h2>
                 </div>
 
-                <form onSubmit={handleSignInWithEmail}>
-                    <p className='pb-1'>Email Address</p>
-                    <input className='p-2 mb-2 border rounded-md w-full border-red-600' type="email" name='email' placeholder='Enter Your email' required />
+                <div className="flex flex-row gap-2 mb-6">
+                    <button onClick={() => handleSocialLogin(createUserWithGoogle, new GoogleAuthProvider())} className='flex-1 flex items-center justify-center py-2.5 border border-base-300 rounded-xl hover:bg-base-200 transition-all'><FcGoogle size={20}/></button>
+                    <button onClick={() => handleSocialLogin(createUserWithGitHub, new GithubAuthProvider())} className='flex-1 flex items-center justify-center py-2.5 bg-slate-800 text-white rounded-xl hover:bg-slate-700 transition-all'><FaGithub size={20}/></button>
+                </div>
 
-                    <p className='pb-1'>Password</p>
-                    <div className="flex flex-col relative">
-                        <input
-                            className='p-2 border rounded-md w-full border-red-600'
-                            type={showPassword ? "text" : "password"}
-                            name="password" id="password"
-                            placeholder='Enter your Passoword' required />
-                        <span onClick={() => setShowPassword(!showPassword)} className="absolute left-[250px] lg:left-[290px] top-2 text-xl">
-                            {
-                                showPassword ? <FaRegEyeSlash /> : <AiOutlineEye />
-                            }
-                        </span>
+                <div className='divider text-[10px] font-bold opacity-30 uppercase mb-6 tracking-widest'>or</div>
+
+                <form onSubmit={handleEmailLogin} className="space-y-4">
+                    <div className="relative">
+                        <FaEnvelope className="absolute left-4 top-1/2 -translate-y-1/2 opacity-30" size={14} />
+                        <input className='w-full bg-base-200 rounded-xl py-3 pl-10 pr-4 text-xs font-bold outline-none focus:ring-2 ring-primary/20 transition-all' type="email" name='email' placeholder='Email' required />
                     </div>
-
-                    <button className='font-bold text-white w-full mt-5 p-2 rounded-md border bg-[#1c67bc]'>
-                        Login
-                    </button>
+                    <div className="relative">
+                        <FaLock className="absolute left-4 top-1/2 -translate-y-1/2 opacity-30" size={14} />
+                        <input className='w-full bg-base-200 rounded-xl py-3 pl-10 pr-10 text-xs font-bold outline-none focus:ring-2 ring-primary/20 transition-all' type={showPassword ? "text" : "password"} name="password" placeholder='Password' required />
+                        <button type="button" onClick={() => setShowPassword(!showPassword)} className="absolute right-4 top-1/2 -translate-y-1/2 opacity-50">{showPassword ? <FaRegEyeSlash size={16}/> : <AiOutlineEye size={16}/>}</button>
+                    </div>
+                    <button className='w-full bg-primary hover:bg-primary-focus text-white font-black py-3 rounded-xl shadow-lg shadow-primary/20 text-xs uppercase tracking-widest transition-all'>Secure Login</button>
                 </form>
 
-                <h1 className='text-center mt-4'>Do not have an accout? <Link to='/register' className='text-[16px] font-bold'>Register</Link></h1>
-
-            </div>
-
+                <p className='text-center mt-6 text-[11px] font-bold opacity-70'>New here? <Link to='/register' className='text-primary border-b border-primary/30 ml-1'>Register</Link></p>
+            </motion.div>
         </div>
-
     );
 };
 
