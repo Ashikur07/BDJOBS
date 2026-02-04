@@ -1,24 +1,88 @@
+import { Link } from "react-router-dom";
+import { FaFacebook, FaTwitter, FaYoutube, FaLinkedin, FaGithub } from "react-icons/fa";
 
 const Footer = () => {
     return (
-        <footer className="footer footer-center p-10 bg-[#002147] text-primary-content">
-            <aside>
-                <div className="flex items-center gap-2">
-                    <h1 className="text-lg lg:text-4xl font-bold">BD</h1>
-                    <img className="rounded hidden pt-2 lg:block w-24" src="https://i.ibb.co/PcR73tP/logoweb.png" alt="" />
+        <footer className="bg-white dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800 pt-16 pb-8">
+            <div className="max-w-7xl mx-auto px-4 md:px-8 lg:px-12">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
+                    
+                    {/* Brand Section */}
+                    <div className="space-y-6">
+                        <Link to="/" className="flex items-center gap-2 group">
+                            <div className="w-10 h-10 bg-indigo-600 rounded-xl flex items-center justify-center text-white font-bold shadow-lg shadow-indigo-500/20 transition-transform group-hover:rotate-12">
+                                BD
+                            </div>
+                            <span className="text-2xl font-black tracking-tight text-slate-800 dark:text-white">
+                                Job<span className="text-indigo-600">Hunter</span>
+                            </span>
+                        </Link>
+                        <p className="text-slate-500 dark:text-slate-400 leading-relaxed text-sm">
+                            Connecting world-class talent with the industry's most innovative companies since 2015. Your success is our mission.
+                        </p>
+                        <div className="flex gap-4">
+                            <a href="#" className="p-2 bg-slate-100 dark:bg-slate-800 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-indigo-600 hover:text-white transition-all shadow-sm">
+                                <FaFacebook size={18} />
+                            </a>
+                            <a href="#" className="p-2 bg-slate-100 dark:bg-slate-800 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-indigo-600 hover:text-white transition-all shadow-sm">
+                                <FaTwitter size={18} />
+                            </a>
+                            <a href="#" className="p-2 bg-slate-100 dark:bg-slate-800 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-indigo-600 hover:text-white transition-all shadow-sm">
+                                <FaLinkedin size={18} />
+                            </a>
+                            <a href="#" className="p-2 bg-slate-100 dark:bg-slate-800 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-indigo-600 hover:text-white transition-all shadow-sm">
+                                <FaGithub size={18} />
+                            </a>
+                        </div>
+                    </div>
+
+                    {/* Quick Links */}
+                    <div>
+                        <h4 className="text-slate-900 dark:text-white font-bold mb-6">Company</h4>
+                        <ul className="space-y-4 text-sm font-medium">
+                            <li><Link to="/about" className="text-slate-500 dark:text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">About Us</Link></li>
+                            <li><Link to="/allJobs" className="text-slate-500 dark:text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">Find Jobs</Link></li>
+                            <li><Link to="/blogs" className="text-slate-500 dark:text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">Career Blogs</Link></li>
+                            <li><Link to="/contact" className="text-slate-500 dark:text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">Contact Us</Link></li>
+                        </ul>
+                    </div>
+
+                    {/* Support */}
+                    <div>
+                        <h4 className="text-slate-900 dark:text-white font-bold mb-6">Resources</h4>
+                        <ul className="space-y-4 text-sm font-medium">
+                            <li><Link to="/" className="text-slate-500 dark:text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">Help Center</Link></li>
+                            <li><Link to="/" className="text-slate-500 dark:text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">Privacy Policy</Link></li>
+                            <li><Link to="/" className="text-slate-500 dark:text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">Terms of Service</Link></li>
+                            <li><Link to="/" className="text-slate-500 dark:text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">Security</Link></li>
+                        </ul>
+                    </div>
+
+                    {/* Newsletter */}
+                    <div>
+                        <h4 className="text-slate-900 dark:text-white font-bold mb-6">Stay Updated</h4>
+                        <p className="text-slate-500 dark:text-slate-400 text-sm mb-4">
+                            Subscribe to get the latest job alerts and career tips.
+                        </p>
+                        <div className="flex flex-col gap-2">
+                            <input 
+                                type="email" 
+                                placeholder="Enter email" 
+                                className="w-full px-4 py-3 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all"
+                            />
+                            <button className="w-full py-3 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl font-bold text-sm shadow-lg shadow-indigo-500/20 transition-all">
+                                Subscribe
+                            </button>
+                        </div>
+                    </div>
                 </div>
-                <p className="font-bold">
-                    Providing reliable tech since 2015
-                </p>
-                <p>Copyright © 2024 - All right reserved</p>
-            </aside>
-            <nav>
-                <div className="grid grid-flow-col gap-4">
-                    <a><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" className="fill-current"><path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"></path></svg></a>
-                    <a><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" className="fill-current"><path d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.816v-8l8 3.993-8 4.007z"></path></svg></a>
-                    <a><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" className="fill-current"><path d="M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.667c0-.955.192-1.333 1.115-1.333h2.885v-5h-3.808c-3.596 0-5.192 1.583-5.192 4.615v3.385z"></path></svg></a>
+
+                {/* Bottom Bar */}
+                <div className="pt-8 border-t border-slate-100 dark:border-slate-800 flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-slate-500 dark:text-slate-400">
+                    <p>© {new Date().getFullYear()} JobHunter. Built with ❤️ in Bangladesh.</p>
+                    <p>Designed for the next generation of talent.</p>
                 </div>
-            </nav>
+            </div>
         </footer>
     );
 };
