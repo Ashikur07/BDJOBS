@@ -53,7 +53,7 @@ const Contract = () => {
                                 <FaPhoneAlt className="text-primary text-xl" />
                                 <div>
                                     <p className="text-[10px] font-black opacity-40 uppercase tracking-widest">Phone</p>
-                                    <p className="text-xs font-bold">+880 17XX-XXXXXX</p>
+                                    <p className="text-xs font-bold">+880 1743439382</p>
                                 </div>
                             </div>
                         </div>
