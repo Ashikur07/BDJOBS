@@ -1,11 +1,11 @@
 # 💼 BDJob - Next Level Job Marketplace
 
 <p align="center">
-  <img src="https://i.ibb.co/1a2503.png" alt="BDJob Banner" width="100%" style="border-radius: 20px;" />
+  <img src="https://github.com/user-attachments/assets/ad74d530-ebde-40fe-a641-45588d490c7c" alt="BDJob Banner" width="100%" style="border-radius: 20px;" />
 </p>
 
 <p align="center">
-  <a href="https://assignment-11-by-ashik.netlify.app">
+  <a href="https://bdjobs-24.vercel.app">
     <img src="https://img.shields.io/badge/Live%20Demo-🌐-blue?style=for-the-badge&logo=netlify&logoColor=white" alt="Live Link" />
   </a>
   <img src="https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB" alt="React" />
@@ -17,6 +17,19 @@
 
 ## 📖 Overview
 **BDJob** is a premium job-posting platform designed to bridge the gap between talented professionals and top-tier companies. Built with a modern **Glassmorphism UI**, it offers a seamless experience for job seekers and recruiters alike, featuring smooth staggered animations for a premium SaaS feel.
+
+-------
+## 📸 Application Previews
+
+| 🏠 Landing Page Overview | 🔐 Interactive Login |
+| :---: | :---: |
+| ![Landing](https://github.com/user-attachments/assets/ad74d530-ebde-40fe-a641-45588d490c7c) | ![Login](https://github.com/user-attachments/assets/4ef10bbb-7d32-4fa7-aa51-663087d80950) |
+
+| 🎓 User Profile | 👨‍🏫 All Jobs Section |
+| :---: | :---: |
+| ![Student](https://github.com/user-attachments/assets/c8f0bc5c-bec3-4ef6-a308-9e46cbcd137b) | ![Instructor](https://github.com/user-attachments/assets/cf8158bc-11b8-4a68-af57-5d2c93dc2705) |
+
+------------
 
 ## ✨ Features & Characteristics
 * **🛡️ Secure Authentication:** Implementation of a secure login and registration system using **Firebase Auth** and encryption protocols to protect user data.
@@ -32,10 +45,11 @@
 * **Animation:** Framer Motion & Lottie React
 * **Database & Auth:** Firebase
 * **Deployment:** Netlify / Vercel
+* **Server Repository:** 💻 **[Backend Link](https://github.com/Ashikur07/bdjobs-backend)**
 
-## 🚀 Getting Started
-To run **BDJob** locally:
-
-1. **Clone the Repo:**
-   ```bash
-   git clone [https://github.com/Ashikur07/BDJOBS.git](https://github.com/Ashikur07/BDJOBS.git)
+## 📦 Installation & Setup
+1. **Clone the repo:** `git clone https://github.com/Ashikur07/BDJOBS`
+2. **Install:** `npm install`
+3. **Required Packages:** Make sure `canvas-confetti` and `framer-motion` are present.
+4. **Environment:** Setup your Firebase and Stripe keys in a `.env` file.
+5. **Run:** `npm run dev`
