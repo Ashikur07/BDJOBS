@@ -46,7 +46,7 @@ const Contract = () => {
                                 <FaEnvelope className="text-primary text-xl" />
                                 <div className="truncate">
                                     <p className="text-[10px] font-black opacity-40 uppercase tracking-widest">Email</p>
-                                    <p className="text-xs font-bold truncate">ashikur@ict.iu.ac.bd</p>
+                                    <p className="text-xs font-bold truncate">ashik.ict.iu@gmail.com</p>
                                 </div>
                             </div>
                             <div className="flex items-center gap-3 p-4 bg-base-200 rounded-2xl border border-base-300">
