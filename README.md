@@ -15,7 +15,7 @@
 
 ---
 
-## 📖 Overview
+## 📖 Overview 
 **BDJob** is a premium job-posting platform designed to bridge the gap between talented professionals and top-tier companies. Built with a modern **Glassmorphism UI**, it offers a seamless experience for job seekers and recruiters alike, featuring smooth staggered animations for a premium SaaS feel.
 
 -------
